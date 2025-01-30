@@ -196,6 +196,8 @@ services:
     environment:
       KAFKA_BROKER: broker:29092
       KAFKA_TOPIC: rss-feed
+      KAFKA_VALUE_SERIALIZER: io.confluent.kafka.serializers.KafkaAvroSerializer
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
       RSS_FEEDS: 'https://www.agefi.fr/theme/ia.rss,https://www.actuia.com/feed/'
       XML_JQ_FILTER: '{title: .channel.item.title, description: .channel.item.description, link: .channel.item.link, pubDate: .channel.item.pubDate, category: .channel.item.category}'
       QUARKUS_SSL_NATIVE: true
