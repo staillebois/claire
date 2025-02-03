@@ -14,6 +14,40 @@ The goal of the clAIre project is to provide users with an innovative way to int
 
 To get started with clAIre, follow the installation instructions and setup guide provided in the repository.
 
+### Ollama
+
+[Ollama](https://ollama.com/) is a server that allows you to run LLMs locally on your machine. There are two options depending on your setup: local installation (recommended) or using Docker.
+
+In addition to installing Ollama, you need to download [Nomic](https://ollama.com/library/nomic-embed-text), A high-performing open embedding model with a large token context window that can run on modest configurations.
+
+<details>
+    <summary><b>Local Installation (recommended)</b></summary>
+
+This installation will allow Ollama to [take advantage of the GPU](https://github.com/ollama/ollama/blob/main/docs/gpu.md) on your machine. Follow the instructions at [https://ollama.com/download](https://ollama.com/download).
+
+Once installed and running, download the model with `ollama pull nomic-embed-text:latest`.
+
+To chat with the model, run `ollama run nomic-embed-text:latest` and say something, for example, "Hello, how are you?"
+
+</details>
+
+<details>
+    <summary><b>Installation with Docker</b></summary>
+
+If local installation is not possible, run Ollama by executing the following command:
+
+```
+docker compose up ollama
+```
+
+Once running, load the model with
+
+```
+docker exec -it ollama ollama pull nomic-embed-text:latest
+```
+
+</details>
+
 ## Contributing
 
 We welcome contributions from the community. Please read our contributing guidelines to learn how you can help improve clAIre.

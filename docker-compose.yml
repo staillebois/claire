@@ -180,6 +180,17 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - 11434:11434
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_ORIGINS=*
+
   rss-injector:
     container_name: rss-injector
     hostname: rss-injector
@@ -205,3 +216,6 @@ services:
 networks:
   claire:
     driver: bridge
+
+volumes:
+  ollama:
