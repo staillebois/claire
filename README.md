@@ -18,6 +18,12 @@ The goal of the clAIre project is to provide users with an innovative way to int
 
 To get started with clAIre, follow the installation instructions and setup guide provided in the repository.
 
+## Requirements
+
+- JDK >= 21.0.5
+- Docker >= 27.4.0
+- Docker compose >= 2.31.0
+
 ### Ollama
 
 [Ollama](https://ollama.com/) is a server that allows you to run LLMs locally on your machine. There are two options depending on your setup: local installation (recommended) or using Docker.
