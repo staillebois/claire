@@ -4,6 +4,10 @@
 
 The goal of the clAIre project is to provide users with an innovative way to interact with their RSS feeds using artificial intelligence. With clAIre, you will be able to have conversations with your RSS feed, making it easier to stay updated with the latest news and information.
 
+## Architecture
+
+![arch.png](./schema/arch.png)
+
 ## Features
 
 - AI-powered interaction with RSS feeds
@@ -47,6 +51,30 @@ docker exec -it ollama ollama pull nomic-embed-text:latest
 ```
 
 </details>
+
+### Getting github dependencies
+
+Run the following commands:
+
+```
+git clone git@github.com:staillebois/rss-injector.git ../rss-injector
+git clone git@github.com:staillebois/rss-embeddings.git ../rss-embeddings
+```
+
+Build dependencies:
+
+```
+../rss-injector/mvnw -f ../rss-injector/pom.xml package
+../rss-embeddings/gradlew -p ../rss-embeddings build
+```
+
+### Run the platform
+
+You just have to run the following command:
+
+```
+docker compose up -d
+```
 
 ## Contributing
 
