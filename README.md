@@ -65,6 +65,7 @@ Run the following commands:
 ```
 git clone git@github.com:staillebois/rss-injector.git ../rss-injector
 git clone git@github.com:staillebois/rss-embeddings.git ../rss-embeddings
+git clone git@github.com:staillebois/es-indexer.git ../es-indexer
 ```
 
 Build dependencies:
@@ -73,6 +74,10 @@ Build dependencies:
 ../rss-injector/mvnw -f ../rss-injector/pom.xml package
 ../rss-embeddings/gradlew -p ../rss-embeddings build
 ```
+
+### Configuration
+
+Update the environment variable `RSS_FEEDS` inside the `docker-compose.yml` file by adding the list of your favorites RSS feeds
 
 ### Run the platform
 
