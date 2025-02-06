@@ -187,6 +187,8 @@ services:
       - ollama:/root/.ollama
     ports:
       - 11434:11434
+    networks:
+      - claire
     environment:
       - OLLAMA_HOST=0.0.0.0
       - OLLAMA_ORIGINS=*
@@ -196,7 +198,7 @@ services:
     hostname: rss-injector
     build:
       context: ../rss-injector/
-      # dockerfile: ./src/main/docker/Dockerfile.native
+      dockerfile: ./src/main/docker/Dockerfile.jvm
     networks:
       - claire
     depends_on:
@@ -209,9 +211,34 @@ services:
       KAFKA_TOPIC: rss-feed
       KAFKA_VALUE_SERIALIZER: io.confluent.kafka.serializers.KafkaAvroSerializer
       SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      # This is the entry point of the platform, add list of your favorite RSS feeds
       RSS_FEEDS: 'https://www.agefi.fr/theme/ia.rss,https://www.actuia.com/feed/'
       XML_JQ_FILTER: '{title: .channel.item.title, description: .channel.item.description, link: .channel.item.link, pubDate: .channel.item.pubDate, category: .channel.item.category}'
       QUARKUS_SSL_NATIVE: true
+
+  rss-embeddings:
+    container_name: rss-embeddings
+    hostname: rss-embeddings
+    build:
+      context: ../rss-embeddings/
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    networks:
+      - claire
+    depends_on:
+      - broker
+      - schema-registry
+      - connect
+      - ksqldb-server
+    environment:
+      MP_MESSAGING_OUTGOING_RSS_EMBEDDINGS_TOPIC: rss-embeddings
+      MP_MESSAGING_INCOMING_RSS_FEED_TOPIC: rss-feed
+      MP_MESSAGING_INCOMING_RSS_FEED_AUTO_OFFSET_RESET: earliest
+      KAFKA_BOOTSTRAP_SERVERS: broker:29092
+      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      QUARKUS_LANGCHAIN4J_OLLAMA_BASE_URL: 'http://ollama:11434'
+      QUARKUS_LANGCHAIN4J_OLLAMA_LOG_REQUESTS: false
+      QUARKUS_LANGCHAIN4J_OLLAMA_TIMEOUT: '120s'
+      QUARKUS_LANGCHAIN4J_OLLAMA_EMBEDDING_MODEL_MODEL_ID: 'nomic-embed-text:latest'
 
 networks:
   claire:
