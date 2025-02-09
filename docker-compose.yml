@@ -1,6 +1,7 @@
 ---
 services:
 
+  ### KAFKA SERVICES ###
   broker:
     image: confluentinc/cp-kafka:7.8.0
     hostname: broker
@@ -180,6 +181,44 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 
+  ### ELASTICSEARCH SERVICES ###
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: elasticsearch
+    # volumes:
+    #   - es-es01:/usr/share/elasticsearch/data
+    ports:
+      - ${ES_PORT}:9200
+    networks:
+      - claire
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - xpack.license.self_generated.type=${LICENSE}
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: kibana
+    # volumes:
+    #   - es-kibana:/usr/share/kibana/data
+    ports:
+      - ${KIBANA_PORT}:5601
+    networks:
+      - claire
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    mem_limit: ${MEM_LIMIT}
+
+  ### INFERENCE SERVICES ###
   ollama:
     image: ollama/ollama
     container_name: ollama
@@ -193,6 +232,7 @@ services:
       - OLLAMA_HOST=0.0.0.0
       - OLLAMA_ORIGINS=*
 
+  ### ClAIre SERVICES ###
   rss-injector:
     container_name: rss-injector
     hostname: rss-injector
@@ -245,4 +285,6 @@ networks:
     driver: bridge
 
 volumes:
+  # es-es01:
+  # es-kibana:
   ollama:
