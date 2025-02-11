@@ -73,6 +73,7 @@ Build dependencies:
 ```
 ../rss-injector/mvnw -f ../rss-injector/pom.xml package
 ../rss-embeddings/gradlew -p ../rss-embeddings build
+../embeddings-indexer/gradlew -p ../embeddings-indexer build
 ```
 
 ### Configuration

@@ -280,6 +280,28 @@ services:
       QUARKUS_LANGCHAIN4J_OLLAMA_TIMEOUT: '120s'
       QUARKUS_LANGCHAIN4J_OLLAMA_EMBEDDING_MODEL_MODEL_ID: 'nomic-embed-text:latest'
 
+  embeddings-indexer:
+    container_name: embeddings-indexer
+    hostname: embeddings-indexer
+    build:
+      context: ../embeddings-indexer/
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    networks:
+      - claire
+    depends_on:
+      - broker
+      - schema-registry
+      - connect
+      - ksqldb-server
+    environment:
+      MP_MESSAGING_INCOMING_RSS_EMBEDDINGS_TOPIC: rss-embeddings
+      MP_MESSAGING_INCOMING_RSS_EMBEDDINGS_AUTO_OFFSET_RESET: earliest
+      KAFKA_BOOTSTRAP_SERVERS: broker:29092
+      MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      ELASTIC_URL: http://elasticsearch:9200
+      ELASTIC_SOCKET_TIMEOUT: 50000
+      ELASTIC_INDEX_NAME: rss-embeddings
+
 networks:
   claire:
     driver: bridge
