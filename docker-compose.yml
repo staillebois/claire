@@ -310,11 +310,8 @@ services:
     networks:
       - claire
     depends_on:
-      - broker
-      - schema-registry
-      - connect
-      - ksqldb-server
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     environment:
       MP_MESSAGING_INCOMING_RSS_EMBEDDINGS_TOPIC: rss-embeddings
       MP_MESSAGING_INCOMING_RSS_EMBEDDINGS_AUTO_OFFSET_RESET: earliest
