@@ -66,6 +66,7 @@ Run the following commands:
 git clone git@github.com:staillebois/rss-injector.git ../rss-injector
 git clone git@github.com:staillebois/rss-embeddings.git ../rss-embeddings
 git clone git@github.com:staillebois/embeddings-indexer.git ../embeddings-indexer
+git clone git@github.com:staillebois/claire-service.git ../claire-service
 ```
 
 Build dependencies:
