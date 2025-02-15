@@ -274,6 +274,7 @@ services:
       SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
       # This is the entry point of the platform, add list of your favorite RSS feeds
       RSS_FEEDS: 'https://www.agefi.fr/theme/ia.rss,https://www.actuia.com/feed/'
+      RSS_DELAY: 60000
       XML_JQ_FILTER: '{title: .channel.item.title, description: .channel.item.description, link: .channel.item.link, pubDate: .channel.item.pubDate, category: .channel.item.category}'
       QUARKUS_SSL_NATIVE: true
 
