@@ -273,8 +273,8 @@ services:
       KAFKA_VALUE_SERIALIZER: io.confluent.kafka.serializers.KafkaAvroSerializer
       SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
       # This is the entry point of the platform, add list of your favorite RSS feeds
-      RSS_FEEDS: 'https://www.agefi.fr/theme/ia.rss,https://www.actuia.com/feed/'
-      RSS_DELAY: 60000
+      RSS_FEEDS: 'https://www.agefi.fr/theme/ia.rss,https://www.actuia.com/feed/,https://intelligence-artificielle.developpez.com/index/rss,https://www.francetvinfo.fr/internet/intelligence-artificielle.rss'
+      RSS_DELAY: 600000 # poll every 10 minutes
       XML_JQ_FILTER: '{title: .channel.item.title, description: .channel.item.description, link: .channel.item.link, pubDate: .channel.item.pubDate, category: .channel.item.category}'
       QUARKUS_SSL_NATIVE: true
 
@@ -321,6 +321,28 @@ services:
       ELASTIC_URL: http://elasticsearch:9200
       ELASTIC_SOCKET_TIMEOUT: 50000
       ELASTIC_INDEX_NAME: rss-embeddings
+
+  claire-service:
+    container_name: claire-service
+    hostname: claire-service
+    build:
+      context: ../claire-service/
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    networks:
+      - claire
+    ports:
+      - 8080:8080
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      ELASTIC_URL: http://elasticsearch:9200
+      ELASTIC_SOCKET_TIMEOUT: 50000
+      ELASTIC_INDEX_NAME: rss-embeddings
+      QUARKUS_LANGCHAIN4J_OLLAMA_BASE_URL: 'http://ollama:11434'
+      QUARKUS_LANGCHAIN4J_OLLAMA_LOG_REQUESTS: false
+      QUARKUS_LANGCHAIN4J_OLLAMA_TIMEOUT: '120s'
+      QUARKUS_LANGCHAIN4J_OLLAMA_EMBEDDING_MODEL_MODEL_ID: 'nomic-embed-text:latest'
 
 networks:
   claire:
