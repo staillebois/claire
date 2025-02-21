@@ -50,10 +50,12 @@ If local installation is not possible, run Ollama by executing the following com
 docker compose up ollama
 ```
 
-Once running, load the model with
+Once running, load the wanted models with
 
 ```
 docker exec -it ollama ollama pull nomic-embed-text:latest
+docker exec -it ollama ollama pull wizardlm2
+docker exec -it ollama ollama pull deepseek-r1:7b
 ```
 
 </details>
