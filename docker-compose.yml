@@ -240,18 +240,18 @@ services:
       retries: 120
 
   ### INFERENCE SERVICES ###
-  ollama:
-    image: ollama/ollama
-    container_name: ollama
-    volumes:
-      - ollama:/root/.ollama
-    ports:
-      - 11434:11434
-    networks:
-      - claire
-    environment:
-      - OLLAMA_HOST=0.0.0.0
-      - OLLAMA_ORIGINS=*
+  # ollama:
+  #   image: ollama/ollama
+  #   container_name: ollama
+  #   volumes:
+  #     - ollama:/root/.ollama
+  #   ports:
+  #     - 11434:11434
+  #   networks:
+  #     - claire
+  #   environment:
+  #     - OLLAMA_HOST=0.0.0.0
+  #     - OLLAMA_ORIGINS=*
 
   ### ClAIre SERVICES ###
   rss-injector:
@@ -344,7 +344,7 @@ services:
       QUARKUS_HTTP_CORS_METHODS: GET, OPTIONS, HEAD, PUT, POST
       QUARKUS_LANGCHAIN4J_OLLAMA_BASE_URL: 'http://host.docker.internal:11434'
       QUARKUS_LANGCHAIN4J_OLLAMA_LOG_REQUESTS: false
-      QUARKUS_LANGCHAIN4J_OLLAMA_TIMEOUT: '120s'
+      QUARKUS_LANGCHAIN4J_OLLAMA_TIMEOUT: '2400s'
       QUARKUS_LANGCHAIN4J_OLLAMA_EMBEDDING_MODEL_MODEL_ID: 'nomic-embed-text:latest'
       QUARKUS_LANGCHAIN4J_OLLAMA_CHAT_MODEL_MODEL_ID: 'wizardlm2'
       OLLAMA_URL: 'http://host.docker.internal:11434'
@@ -355,7 +355,7 @@ networks:
   claire:
     driver: bridge
 
-volumes:
+# volumes:
   # es-es01:
   # es-kibana:
-  ollama:
+  # ollama:
