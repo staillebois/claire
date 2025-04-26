@@ -351,6 +351,20 @@ services:
       OLLAMA_MODEL: wizardlm2
       OLLAMA_DURATION: 2400
 
+  claire-ui:
+    container_name: claire-ui
+    hostname: claire-ui
+    build:
+      context: ../claire-ui/
+      dockerfile: ./Dockerfile
+    networks:
+      - claire
+    ports:
+      - 3000:3000
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
 networks:
   claire:
     driver: bridge
