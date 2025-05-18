@@ -95,9 +95,16 @@ docker compose up -d --build
 
 ### Speak with your feed 🗣️
 
+
+#### API 🖥️
+
 ```
 curl -H "Content-Type: application/json" -d 'What about AI ?' -XPOST http://localhost:8080/chat
 ```
+
+#### Chatbot 🤖
+
+The chatbot is available at http://localhost:3000/. Feel free to speak with your RSS feed.
 
 ## Contributing 🤝
 
